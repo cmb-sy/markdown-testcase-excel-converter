@@ -64,8 +64,4 @@ uv sync
 
 ## 設定
 
-`config.yaml`で列の設定やシート名をカスタマイズできます。
-
-## ライセンス
-
-MIT License
+`config.yaml`で列の設定やシート名をカスタマイズする。
