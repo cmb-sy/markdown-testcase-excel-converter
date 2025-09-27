@@ -8,43 +8,78 @@
 #     multi-idx: 複数のインデックスを持つかどうか。true, false
 columns:
   number:
-    name: 'NO'
+    name: "NO"
     length: 6
-    horizontal: 'center'
-    vertical: 'center'
+    horizontal: "center"
+    vertical: "center"
   section:
-    name: '大分類'
-    md_pattern: '^## (.+)$'
+    name: "大分類"
+    md_pattern: "^## (.+)$"
     length: 20
-    horizontal: 'left'
-    vertical: 'top'
+    horizontal: "left"
+    vertical: "top"
     multi-idx: true
   subsection:
-    name: '中分類'
-    md_pattern: '^### (.+)$'
+    name: "中分類"
+    md_pattern: "^### (.+)$"
     length: 15
-    horizontal: 'left'
-    vertical: 'top'
+    horizontal: "left"
+    vertical: "top"
     multi-idx: true
   testcase:
-    name: '小分類'
-    md_pattern: '^#### (.+)$'
+    name: "小分類"
+    md_pattern: "^#### (.+)$"
     length: 50
-    horizontal: 'left'
-    vertical: 'top'
+    horizontal: "left"
+    vertical: "top"
     multi-idx: true
   step:
-    name: '試験内容'
+    name: "試験内容"
     md_pattern: '^\d+\. (.+)$'
     length: 70
-    horizontal: 'left'
-    vertical: 'top'
+    horizontal: "left"
+    vertical: "top"
   expectation:
-    name: '確認事項'
-    md_pattern: '^\* \[ \] (.+)$'
+    name: "確認事項"
+    md_pattern: '^(?:\*|-)\s+\[(?: |x|X)\]\s+(.+)$'
     length: 70
-    horizontal: 'left'
-    vertical: 'top'
+    horizontal: "left"
+    vertical: "top"
+  tester:
+    name: "試験実施者"
+    length: 15
+    horizontal: "center"
+    vertical: "center"
+  test_date:
+    name: "試験日"
+    length: 12
+    horizontal: "center"
+    vertical: "center"
+  test_status:
+    name: "試験ステータス"
+    length: 15
+    horizontal: "center"
+    vertical: "center"
+  test_remark:
+    name: "試験結果備考"
+    length: 30
+    horizontal: "left"
+    vertical: "top"
+  retest_tester:
+    name: "再試験実施者"
+    length: 15
+    horizontal: "center"
+    vertical: "center"
+  retest_status:
+    name: "再試験ステータス"
+    length: 15
+    horizontal: "center"
+    vertical: "center"
+  retest_remark:
+    name: "再試験結果備考"
+    length: 30
+    horizontal: "left"
+    vertical: "top"
 
 excel_settings:
   font_name: Meiryo UI

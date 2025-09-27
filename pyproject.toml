@@ -1,42 +1,54 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "md-test-case-to-excel"
-version = "0.3.0"
-description = "Markdownで書かれたテスト仕様書をExcel形式に変換するツール"
+name = "md-testcase-excel-converter"
+version = "1.0.0"
+description = "Markdownで書かれたテスト仕様書をExcelファイルに変換するツール"
 authors = [
-    {name = "Anonymous", email = ""}
+    {name = "Your Name", email = "your.email@example.com"}
 ]
 readme = "README.md"
-license = {text = "MIT"}
 requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
 dependencies = [
-    "pandas>=2.2.0",
-    "openpyxl>=3.1.0",
-    "pydantic>=2.9.0",
-    "pyyaml>=6.0.0",
+    "pandas>=1.5.0",
+    "openpyxl>=3.0.0",
+    "pyyaml>=6.0",
 ]
 
 [project.scripts]
-md2excel = "md_test_case_to_excel.converter:main"
+md-to-excel = "src.converter:main"
 
-[project.urls]
-Homepage = "https://github.com/your-username/md_test_case_to_excel"
-Repository = "https://github.com/your-username/md_test_case_to_excel"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["md_test_case_to_excel*"]
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
 
-[tool.setuptools.package-data]
-md_test_case_to_excel = ["*.yaml", "assets/*.xlsx"]
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+]
 
-[tool.setuptools.data-files]
-"md_test_case_to_excel" = ["md_test_case_to_excel/config.yaml"]
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
