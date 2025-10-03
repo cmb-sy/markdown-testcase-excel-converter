@@ -207,3 +207,7 @@ $RECYCLE.BIN/
 # Project specific
 output/
 temp/
+results/
+
+# files
+test.md

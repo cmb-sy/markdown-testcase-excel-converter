@@ -507,6 +507,67 @@ class ExcelWriter:
                         current_value = cell_value
                         start_row = row
 
+        # 試験内容列（E列）の特別なマージ処理
+        # 確認事項の行数分だけ試験内容を結合
+        self._merge_test_content_cells(
+            worksheet, df_excel, template_used, last_row if template_used else None
+        )
+
+    def _merge_test_content_cells(self, worksheet, df_excel, template_used, last_row):
+        """
+        試験内容列（E列）を確認事項の行数分結合する
+
+        Args:
+            worksheet: Excelワークシートオブジェクト
+            df_excel: データフレーム
+            template_used: テンプレート使用フラグ
+            last_row: テンプレート使用時の最終行番号
+        """
+        # 試験内容列のインデックス（E列 = 5列目 = インデックス4）
+        test_content_col_idx = 4
+        test_content_col_letter = get_column_letter(test_content_col_idx + 1)  # E列
+
+        # データの開始行
+        start_row = 2 if not template_used else last_row
+
+        # 現在のテストケースの開始行と確認事項の数を追跡
+        current_testcase_start = None
+        current_testcase_count = 0
+        current_testcase_base = None
+
+        for i, row in enumerate(df_excel.itertuples(index=False)):
+            actual_row = i + start_row
+            no_value = row[0]  # NO列の値
+
+            # NO列からテストケース番号を抽出（例：1-1-1-1 → 1-1-1）
+            testcase_base = (
+                "-".join(no_value.split("-")[:-1]) if "-" in no_value else no_value
+            )
+
+            # 新しいテストケースが始まった場合
+            if current_testcase_base is None or testcase_base != current_testcase_base:
+                # 前のテストケースのマージ処理
+                if current_testcase_start is not None and current_testcase_count > 1:
+                    end_row = current_testcase_start + current_testcase_count - 1
+                    worksheet.merge_cells(
+                        f"{test_content_col_letter}{current_testcase_start}:{test_content_col_letter}{end_row}"
+                    )
+
+                # 新しいテストケースの開始
+                current_testcase_start = actual_row
+                current_testcase_count = 1
+                current_testcase_base = testcase_base
+            else:
+                # 同じテストケースの確認事項
+                current_testcase_count += 1
+
+        # 最後のテストケースのマージ処理
+        if current_testcase_start is not None and current_testcase_count > 1:
+            end_row = current_testcase_start + current_testcase_count - 1
+            worksheet.merge_cells(
+                f"{test_content_col_letter}{current_testcase_start}:{test_content_col_letter}{end_row}"
+            )
+
     def __call__(
         self,
         output_path: Path,

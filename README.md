@@ -61,7 +61,3 @@ uv run python -m src.converter --output-dir ./custom_output
 # 依存関係のインストール
 uv sync
 ```
-
-## 設定
-
-`config.yaml`で列の設定やシート名をカスタマイズする。
